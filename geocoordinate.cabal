@@ -1,0 +1,92 @@
+cabal-version: 2.0
+
+-- This file has been generated from package.yaml by hpack version 0.36.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           geocoordinate
+version:        0.0.1.0
+description:    Please see the README on GitHub at <https://github.com/flipstone/geocoordinate#readme>
+homepage:       https://github.com/flipstone/geocoordinate#readme
+bug-reports:    https://github.com/flipstone/geocoordinate/issues
+author:         Flipstone Technology Partners, Inc
+maintainer:     development@flipstone.com
+copyright:      2024 Flipstone Technology Partners, Inc
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/flipstone/geocoordinate
+
+flag ci
+  description: More strict ghc options used for development and ci, not intended for end-use.
+  manual: True
+  default: False
+
+library
+  exposed-modules:
+      GeoCoordinate
+  hs-source-dirs:
+      lib
+  default-extensions:
+      NoImplicitPrelude
+  build-depends:
+      geocoordinate-internal
+  default-language: Haskell2010
+  if flag(ci)
+    ghc-options: -j -O2 -msse4.2 -mbmi2 -Wall -Weverything -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-patterns -Wincomplete-record-updates -Wno-prepositive-qualified-module -Wno-missing-safe-haskell-mode -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-missing-import-lists -Wno-all-missed-specialisations -Wnoncanonical-monad-instances -Wpartial-fields -Wmissed-specialisations -Wno-implicit-prelude -Wno-safe -Wno-unsafe -fplugin Henforcer -fplugin-opt "Henforcer:-c./henforcer.toml"
+    build-depends:
+        henforcer
+  else
+    ghc-options: -O2 -msse4.2 -mbmi2 -Wall -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates
+
+library geocoordinate-internal
+  exposed-modules:
+      GeoCoordinate.Distance
+      GeoCoordinate.GeoCoord
+      GeoCoordinate.Geohash
+      GeoCoordinate.ProximitySearch
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , byteslice
+    , containers
+    , deepseq >=1.4 && <=1.6
+    , dimensional
+    , geodetics
+    , geohash
+  default-language: Haskell2010
+  if flag(ci)
+    ghc-options: -j -O2 -msse4.2 -mbmi2 -Wall -Weverything -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-patterns -Wincomplete-record-updates -Wno-prepositive-qualified-module -Wno-missing-safe-haskell-mode -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-missing-import-lists -Wno-all-missed-specialisations -Wnoncanonical-monad-instances -Wpartial-fields -Wmissed-specialisations -Wno-implicit-prelude -Wno-safe -Wno-unsafe -fplugin Henforcer -fplugin-opt "Henforcer:-c./henforcer.toml"
+    build-depends:
+        henforcer
+  else
+    ghc-options: -O2 -msse4.2 -mbmi2 -Wall -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates
+
+test-suite geocoordinate-test
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Generators
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base
+    , byteslice
+    , geocoordinate-internal
+    , hedgehog
+    , tasty
+    , tasty-hedgehog
+  default-language: Haskell2010
+  if flag(ci)
+    ghc-options: -j -O2 -msse4.2 -mbmi2 -Wall -Weverything -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-patterns -Wincomplete-record-updates -Wno-prepositive-qualified-module -Wno-missing-safe-haskell-mode -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-missing-import-lists -Wno-all-missed-specialisations -Wnoncanonical-monad-instances -Wpartial-fields -Wmissed-specialisations -Wno-implicit-prelude -Wno-safe -Wno-unsafe -fplugin Henforcer -fplugin-opt "Henforcer:-c./henforcer.toml"
+    build-depends:
+        henforcer
+  else
+    ghc-options: -O2 -msse4.2 -mbmi2 -Wall -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates

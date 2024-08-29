@@ -1,0 +1,105 @@
+name:                geocoordinate
+version:             0.0.1.0
+github:              "flipstone/geocoordinate"
+license:             BSD3
+author:              "Flipstone Technology Partners, Inc"
+maintainer:          "development@flipstone.com"
+copyright:           "2024 Flipstone Technology Partners, Inc"
+spec-version: 0.36.0
+
+extra-source-files:
+  - README.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/flipstone/geocoordinate#readme>
+
+flags:
+  ci:
+    description: More strict ghc options used for development and ci, not intended for end-use.
+    manual: true
+    default: false
+
+when:
+  - condition: flag(ci)
+    then:
+      dependencies:
+        - henforcer
+      ghc-options:
+        - -j
+        - -O2
+        - -msse4.2
+        - -mbmi2
+        - -Wall
+        - -Weverything
+        - -Werror
+        - -Wcompat
+        - -Widentities
+        - -Wincomplete-uni-patterns
+        - -Wincomplete-patterns
+        - -Wincomplete-record-updates
+        - -Wno-prepositive-qualified-module
+        - -Wno-missing-safe-haskell-mode
+        - -Wno-missing-kind-signatures
+        - -Wno-missing-deriving-strategies
+        - -Wno-missing-import-lists
+        - -Wno-all-missed-specialisations
+        - -Wnoncanonical-monad-instances
+        - -Wpartial-fields
+        - -Wmissed-specialisations
+        - -Wno-implicit-prelude
+        - -Wno-safe
+        - -Wno-unsafe
+        - -fplugin Henforcer
+        - -fplugin-opt "Henforcer:-c./henforcer.toml"
+    else:
+      ghc-options:
+        - -O2
+        - -msse4.2
+        - -mbmi2
+        - -Wall
+        - -fwarn-incomplete-uni-patterns
+        - -fwarn-incomplete-record-updates
+
+library:
+  source-dirs: lib
+  default-extensions:
+    - NoImplicitPrelude
+  dependencies:
+    - geocoordinate-internal
+
+  exposed-modules:
+    - GeoCoordinate
+
+internal-libraries:
+  geocoordinate-internal:
+    source-dirs: src
+    dependencies:
+      - base >= 4.7 && < 5
+      - byteslice
+      - containers
+      - deepseq >= 1.4 && <= 1.6
+      - dimensional
+      - geodetics
+      - geohash
+
+tests:
+  geocoordinate-test:
+    main: Main.hs
+    source-dirs: test
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - base
+      - byteslice
+      - geocoordinate-internal
+      - hedgehog
+      - tasty
+      - tasty-hedgehog

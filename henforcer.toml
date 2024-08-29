@@ -1,0 +1,87 @@
+[forAnyModule]
+allowedOpenUnaliasedImports = 1
+maximumExportsPlusHeaderUndocumented = 0
+minimumExportsPlusHeaderDocumented = 0
+maximumExportsWithoutSince = 0
+minimumExportsWithSince = 0
+moduleHeaderCopyrightMustExistNonEmpty = true
+moduleHeaderDescriptionMustExistNonEmpty = false
+moduleHeaderLicenseMustExistNonEmpty = true
+moduleHeaderMaintainerMustExistNonEmpty = false
+encapsulatedTrees = [ ]
+allowedAliasUniqueness = { allAliasesUniqueExcept = ["Export"] }
+
+[[forAnyModule.allowedQualifications]]
+module = "Control.DeepSeq"
+[[forAnyModule.allowedQualifications.importScheme]]
+qualified = { qualifiedPre = true }
+alias = "DeepSeq"
+
+[[forAnyModule.allowedQualifications]]
+module = "Data.Bytes"
+[[forAnyModule.allowedQualifications.importScheme]]
+qualified = { qualifiedPre = true }
+alias = "Bytes"
+
+[[forAnyModule.allowedQualifications]]
+module = "Data.Bytes.Text.Latin1"
+[[forAnyModule.allowedQualifications.importScheme]]
+qualified = { qualifiedPre = true }
+alias = "BytesL"
+
+[[forAnyModule.allowedQualifications]]
+module = "Data.Geohash"
+[[forAnyModule.allowedQualifications.importScheme]]
+qualified = { qualifiedPre = true }
+alias = "Geohash"
+
+[[forAnyModule.allowedQualifications]]
+module = "Data.Maybe"
+[[forAnyModule.allowedQualifications.importScheme]]
+qualified = { qualifiedPre = true }
+alias = "Maybe"
+
+[[forAnyModule.allowedQualifications]]
+module = "Data.Set"
+[[forAnyModule.allowedQualifications.importScheme]]
+qualified = { qualifiedPre = true }
+alias = "S"
+
+[[forAnyModule.allowedQualifications]]
+module = "Geodetics.Geodetic"
+[[forAnyModule.allowedQualifications.importScheme]]
+qualified = { qualifiedPre = true }
+alias = "Geodetic"
+
+[[forAnyModule.allowedQualifications]]
+module = "Geodetics.Path"
+[[forAnyModule.allowedQualifications.importScheme]]
+qualified = { qualifiedPre = true }
+alias = "GeoPath"
+
+
+[[forAnyModule.allowedQualifications]]
+module = "Numeric.Units.Dimensional.Prelude"
+[[forAnyModule.allowedQualifications.importScheme]]
+qualified = { qualifiedPre = true }
+alias = "DimPrelude"
+
+[[forSpecifiedModules]]
+module = "Generators"
+moduleHeaderCopyrightMustExistNonEmpty = false
+moduleHeaderLicenseMustExistNonEmpty = false
+[forSpecifiedModules.rulesToIgnore]
+maximumExportsPlusHeaderUndocumented = true
+minimumExportsPlusHeaderDocumented = true
+maximumExportsWithoutSince = true
+minimumExportsWithSince = true
+
+[[forSpecifiedModules]]
+module = "Main"
+moduleHeaderCopyrightMustExistNonEmpty = false
+moduleHeaderLicenseMustExistNonEmpty = false
+[forSpecifiedModules.rulesToIgnore]
+maximumExportsPlusHeaderUndocumented = true
+minimumExportsPlusHeaderDocumented = true
+maximumExportsWithoutSince = true
+minimumExportsWithSince = true

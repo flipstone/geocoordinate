@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -o errexit
+
+. scripts/lib/run-in-container.sh
+
+STACK_OPTIONS=""
+
+if [ "$CI" ]; then
+  STACK_OPTIONS="--lock-file error-on-write"
+else
+  STACK_OPTIONS="--fast"
+fi
+
+stack \
+  build \
+  --test \
+  $STACK_OPTIONS \
+  "$@"
