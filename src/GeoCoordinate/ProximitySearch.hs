@@ -50,46 +50,58 @@ import GeoCoordinate.Geohash (hashGeoCoord)
 @since 0.0.1.0
 -}
 proximitySearchHashes :: Distance d => d -> GeoCoord -> S.Set Bytes.Bytes
-proximitySearchHashes dist coord =
-  conjoin $ S.fromList candidates
- where
-  conjoin areas
-    | c == 1 = areas
-    | c == 2 = areas
-    | c == 4 = areas
-    | otherwise = conjoin (S.foldl' keepInits mempty areas)
-   where
-    c = S.size areas
+{-# INLINEABLE proximitySearchHashes #-}
+proximitySearchHashes dist =
+  proximitySearchHashesDouble (toMeters dist)
 
-  keepInits accum bytes =
-    case Bytes.unsnoc bytes of
-      Nothing -> accum
-      Just (keep, _) -> S.insert keep accum
+{- This is a type restricted proximity search. This is done to discharge the typeclass as quickly as
+ possible and allow for the smaller body to be inlined. Do NOT export this version as export has
+ pessimizing impacts on the GHC optimizer. Also do not mark this for inlining as it is relatively
+ large function.
 
-  candidates = Maybe.mapMaybe hashGeoCoord [coord, dn, ne, de, se, ds, sw, dw, nw]
+-}
+proximitySearchHashesDouble :: Double -> GeoCoord -> S.Set Bytes.Bytes
+proximitySearchHashesDouble distMeters coord =
+  let
+    conjoin areas
+      | c == 1 = areas
+      | c == 2 = areas
+      | c == 4 = areas
+      | otherwise = conjoin (S.foldl' keepInits mempty areas)
+     where
+      c = S.size areas
 
-  geodetic = geodeticCoord coord
-  distMeters = toMeters dist
-  dn = directGeo (degreesFromDouble 0) distMeters geodetic
-  de = directGeo (degreesFromDouble 90) distMeters geodetic
-  ds = directGeo (degreesFromDouble 180) distMeters geodetic
-  dw = directGeo (degreesFromDouble 270) distMeters geodetic
+    keepInits accum bytes =
+      case Bytes.unsnoc bytes of
+        Nothing -> accum
+        Just (keep, _) -> S.insert keep accum
 
-  ne = GeoCoord n e
-  se = GeoCoord s e
-  sw = GeoCoord s w
-  nw = GeoCoord n w
+    candidates = Maybe.mapMaybe hashGeoCoord [coord, dn, ne, de, se, ds, sw, dw, nw]
 
-  n = latitude dn
-  e = longitude de
-  s = latitude ds
-  w = longitude dw
+    geodetic = geodeticCoord coord
+    dn = directGeo (degreesFromDouble 0) distMeters geodetic
+    de = directGeo (degreesFromDouble 90) distMeters geodetic
+    ds = directGeo (degreesFromDouble 180) distMeters geodetic
+    dw = directGeo (degreesFromDouble 270) distMeters geodetic
+
+    ne = GeoCoord n e
+    se = GeoCoord s e
+    sw = GeoCoord s w
+    nw = GeoCoord n w
+
+    n = latitude dn
+    e = longitude de
+    s = latitude ds
+    w = longitude dw
+  in
+    conjoin $ S.fromList candidates
 
 {- | Given an origin point and a distance, is a given destination within that distance
 
 @since 0.0.1.0
 -}
 geoDistanceWithin :: Distance d => GeoCoord -> d -> GeoCoord -> Bool
+{-# INLINEABLE geoDistanceWithin #-}
 geoDistanceWithin origin dist =
   (>=) dist . geoDistance origin
 
@@ -106,18 +118,28 @@ geodeticCoord geocoord =
     Geodetic.WGS84
 
 geoDistance :: Distance d => GeoCoord -> GeoCoord -> d
-geoDistance g1 g2 =
-  fromMeters $
-    if g1 == g2
-      then 0.0
-      else
-        let
-          result =
-            case Geodetic.groundDistance (geodeticCoord g1) (geodeticCoord g2) of
-              Just (dist, _, _) -> divideByUnit dist DimPrelude.meter
-              Nothing -> infinity
-        in
-          result
+{-# INLINEABLE geoDistance #-}
+geoDistance g1 =
+  fromMeters . geoDistanceDouble g1
+
+{- This is a type restricted distance, that always returns a 'Double'. This is done to discharge the
+ typeclass as quickly as possible and allow for the smaller body to be inlined. Do NOT export this
+ version as export has pessimizing impacts on the GHC optimizer. Also do not mark this for inlining
+ as it is relatively large function.
+
+-}
+geoDistanceDouble :: GeoCoord -> GeoCoord -> Double
+geoDistanceDouble g1 g2 =
+  if g1 == g2
+    then 0.0
+    else
+      let
+        result =
+          case Geodetic.groundDistance (geodeticCoord g1) (geodeticCoord g2) of
+            Just (dist, _, _) -> divideByUnit dist DimPrelude.meter
+            Nothing -> infinity
+      in
+        result
 
 -- TODO SC-38245 we should use TH/QQ here rather than leave this to runtime. There is just no reason
 -- to have to compute this.
