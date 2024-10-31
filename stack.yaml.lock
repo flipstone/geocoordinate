@@ -5,16 +5,16 @@
 
 packages:
 - completed:
-    commit: 99650dc105858e63a37b4f5f48d3d60af6fb3de1
-    git: https://github.com/flipstone/henforcer.git
     name: henforcer
     pantry-tree:
-      sha256: 6cd0b29c3aef7672ad7f44fb4d11a5d2f74f034e662d31958151a1d8f6aa573c
-      size: 4239
-    version: 0.1.0.0
+      sha256: f00d367a751830e55ecd82e26760bf773c7ad8f5a6550c0ac0a8cb1e47de524f
+      size: 4551
+    sha256: 981372512750fc2b17e43b0b87c45404e5c024ea186beafbc4e3eea8730dc025
+    size: 36129
+    url: https://github.com/flipstone/henforcer/archive/e59f7a252067f649277258704a754348fb6a4a35.tar.gz
+    version: 0.1.0.1
   original:
-    commit: 99650dc105858e63a37b4f5f48d3d60af6fb3de1
-    git: https://github.com/flipstone/henforcer.git
+    url: https://github.com/flipstone/henforcer/archive/e59f7a252067f649277258704a754348fb6a4a35.tar.gz
 - completed:
     hackage: geohash-1.0.1@sha256:be8bf007f56fae73366c295084b9e1bdc6f50a9c3c435767353f5d18b5d76227,516
     pantry-tree:
@@ -23,19 +23,19 @@ packages:
   original:
     hackage: geohash-1.0.1@sha256:be8bf007f56fae73366c295084b9e1bdc6f50a9c3c435767353f5d18b5d76227,516
 - completed:
-    hackage: pollock-0.1.0.1@sha256:36ca228aa40ca6c29b590d16e0e165f2212946882d190e63a20080c6ee449c29,3889
+    hackage: pollock-0.1.0.2@sha256:4638817d2e4f3135b28d4403b194ce757f2e5ca1523d10ff2f4ff28d4874edb4,3925
     pantry-tree:
-      sha256: d493bc13938be2303f010b031a7514d7907c726d8ab0a1048772c862931ce152
+      sha256: 7960564c19b396d42c6b8e3fa66a8d5be350d7e12352065ab19b099ffae36ffc
       size: 1182
   original:
-    hackage: pollock-0.1.0.1@sha256:36ca228aa40ca6c29b590d16e0e165f2212946882d190e63a20080c6ee449c29,3889
+    hackage: pollock-0.1.0.2
 - completed:
-    hackage: tomland-1.3.3.2@sha256:8dd15cd2e8178a9bc3c3db4ef53e706e36ee093417a98b1d26131524629c3c07,9483
+    hackage: tomland-1.3.3.3@sha256:877635f30fc7eeebc7b79283baeec1b7904365973cc3fd98c86f9d147eeef575,9147
     pantry-tree:
-      sha256: 0534ea632a9f1730148567556563193e2051feb11beb41c5ddd76a860b5cdd5d
+      sha256: 4b2b3295ea1bb95295087876a861f50e9f2c667731570fe24383210f794edfc1
       size: 6430
   original:
-    hackage: tomland-1.3.3.2@sha256:8dd15cd2e8178a9bc3c3db4ef53e706e36ee093417a98b1d26131524629c3c07,9483
+    hackage: tomland-1.3.3.3
 - completed:
     hackage: validation-selective-0.2.0.0@sha256:cc847f1a110e3b1bd437a5356f115881b61cafcb11781b570b180efd88bf0907,3917
     pantry-tree:
@@ -45,7 +45,7 @@ packages:
     hackage: validation-selective-0.2.0.0@sha256:cc847f1a110e3b1bd437a5356f115881b61cafcb11781b570b180efd88bf0907,3917
 snapshots:
 - completed:
-    sha256: 4be1ca5d31689b524a7f0f17a439bbe9136465213edc498e9a395899a670f2aa
-    size: 718486
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/22/22.yaml
-  original: lts-22.22
+    sha256: 6c5aeace2ca5ecde793a9e0acfaa730ec8f384aa2f6183a2a252f5f9ec55d623
+    size: 720039
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/22/39.yaml
+  original: lts-22.39

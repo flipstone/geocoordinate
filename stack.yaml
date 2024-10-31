@@ -1,4 +1,4 @@
-resolver: lts-22.22
+resolver: lts-22.39
 system-ghc: true
 install-ghc: false
 
@@ -18,12 +18,12 @@ packages:
 # forks / in-progress versions pinned to a git hash. For example:
 #
 extra-deps:
-  - git: https://github.com/flipstone/henforcer.git
-    commit: 99650dc105858e63a37b4f5f48d3d60af6fb3de1
+  - github: flipstone/henforcer
+    commit: e59f7a252067f649277258704a754348fb6a4a35
 
   - geohash-1.0.1@sha256:be8bf007f56fae73366c295084b9e1bdc6f50a9c3c435767353f5d18b5d76227,516
-  - pollock-0.1.0.1@sha256:36ca228aa40ca6c29b590d16e0e165f2212946882d190e63a20080c6ee449c29,3889
-  - tomland-1.3.3.2@sha256:8dd15cd2e8178a9bc3c3db4ef53e706e36ee093417a98b1d26131524629c3c07,9483
+  - pollock-0.1.0.2
+  - tomland-1.3.3.3
   - validation-selective-0.2.0.0@sha256:cc847f1a110e3b1bd437a5356f115881b61cafcb11781b570b180efd88bf0907,3917
 # - acme-missiles-0.3
 # - git: https://github.com/commercialhaskell/stack.git
