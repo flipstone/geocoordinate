@@ -85,7 +85,7 @@ internal-libraries:
       - containers
       - deepseq >= 1.4 && <= 1.6
       - dimensional
-      - geodetics
+      - geodetics >= 0.1 && < 1.0
       - geohash
 
 tests:
