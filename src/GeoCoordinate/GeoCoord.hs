@@ -29,13 +29,15 @@ import qualified Control.DeepSeq as DeepSeq
 -}
 data GeoCoord = GeoCoord
   { latitude :: !Latitude
-  -- ^ The 'Latitude' portion of a geocoordinate.
-  --
-  -- @since 0.0.1.0
+  {- ^ The 'Latitude' portion of a geocoordinate.
+
+  @since 0.0.1.0
+  -}
   , longitude :: !Longitude
-  -- ^ The 'Longitude' portion of a geocoordinate.
-  --
-  -- @since 0.0.1.0
+  {- ^ The 'Longitude' portion of a geocoordinate.
+
+  @since 0.0.1.0
+  -}
   }
   deriving (Eq, Show)
 

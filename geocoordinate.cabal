@@ -5,7 +5,7 @@ cabal-version: 2.0
 -- see: https://github.com/sol/hpack
 
 name:           geocoordinate
-version:        0.0.1.1
+version:        0.0.2.0
 description:    Please see the README on GitHub at <https://github.com/flipstone/geocoordinate#readme>
 homepage:       https://github.com/flipstone/geocoordinate#readme
 bug-reports:    https://github.com/flipstone/geocoordinate/issues
@@ -41,6 +41,10 @@ library
     ghc-options: -j -O2 -msse4.2 -mbmi2 -Wall -Weverything -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-patterns -Wincomplete-record-updates -Wno-prepositive-qualified-module -Wno-missing-safe-haskell-mode -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-missing-import-lists -Wno-all-missed-specialisations -Wnoncanonical-monad-instances -Wpartial-fields -Wmissed-specialisations -Wno-implicit-prelude -Wno-safe -Wno-unsafe -fplugin Henforcer -fplugin-opt "Henforcer:-c./henforcer.toml"
     build-depends:
         henforcer
+    if impl (ghc >= 9.8)
+      ghc-options: -Wno-missing-role-annotations -Wno-missing-poly-kind-signatures
+    if impl (ghc >= 9.10)
+      ghc-options: -Wno-defaulted-exception-context
   else
     ghc-options: -O2 -msse4.2 -mbmi2 -Wall -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates
 
@@ -58,13 +62,17 @@ library geocoordinate-internal
     , containers
     , deepseq >=1.4 && <=1.6
     , dimensional
-    , geodetics >=0.1 && <1.0
+    , geodetics >=0.1 && <1.2
     , geohash
   default-language: Haskell2010
   if flag(ci)
     ghc-options: -j -O2 -msse4.2 -mbmi2 -Wall -Weverything -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-patterns -Wincomplete-record-updates -Wno-prepositive-qualified-module -Wno-missing-safe-haskell-mode -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-missing-import-lists -Wno-all-missed-specialisations -Wnoncanonical-monad-instances -Wpartial-fields -Wmissed-specialisations -Wno-implicit-prelude -Wno-safe -Wno-unsafe -fplugin Henforcer -fplugin-opt "Henforcer:-c./henforcer.toml"
     build-depends:
         henforcer
+    if impl (ghc >= 9.8)
+      ghc-options: -Wno-missing-role-annotations -Wno-missing-poly-kind-signatures
+    if impl (ghc >= 9.10)
+      ghc-options: -Wno-defaulted-exception-context
   else
     ghc-options: -O2 -msse4.2 -mbmi2 -Wall -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates
 
@@ -88,5 +96,9 @@ test-suite geocoordinate-test
     ghc-options: -j -O2 -msse4.2 -mbmi2 -Wall -Weverything -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-patterns -Wincomplete-record-updates -Wno-prepositive-qualified-module -Wno-missing-safe-haskell-mode -Wno-missing-kind-signatures -Wno-missing-deriving-strategies -Wno-missing-import-lists -Wno-all-missed-specialisations -Wnoncanonical-monad-instances -Wpartial-fields -Wmissed-specialisations -Wno-implicit-prelude -Wno-safe -Wno-unsafe -fplugin Henforcer -fplugin-opt "Henforcer:-c./henforcer.toml"
     build-depends:
         henforcer
+    if impl (ghc >= 9.8)
+      ghc-options: -Wno-missing-role-annotations -Wno-missing-poly-kind-signatures
+    if impl (ghc >= 9.10)
+      ghc-options: -Wno-defaulted-exception-context
   else
     ghc-options: -O2 -msse4.2 -mbmi2 -Wall -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates

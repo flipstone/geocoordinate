@@ -1,3 +1,4 @@
+{-# LANGUAGE NumericUnderscores #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
 
@@ -14,7 +15,7 @@ import Test.Tasty.Hedgehog (testProperty)
 import Generators (degreesGen, doubleRangeGen, geoCoordGen, meterGen)
 import GeoCoordinate.Distance (Degrees (..), Kilometers (Kilometers), Meters (Meters), toMeters)
 import GeoCoordinate.Geohash (hashGeoCoord)
-import GeoCoordinate.ProximitySearch (directGeo, geodeticCoord, proximitySearchHashes)
+import GeoCoordinate.ProximitySearch (directGeo, geoDistanceWithin, geodeticCoord, proximitySearchHashes)
 
 main :: IO ()
 main = do
@@ -23,8 +24,8 @@ main = do
 test_geoSpec :: TestTree
 test_geoSpec =
   testGroup
-    "GeoCoord proximitySearchHashes"
-    [ testProperty "contains a prefix of every lat/lng in the search area"
+    "GeoCoordinate"
+    [ testProperty "proximitySearchHashes contains a prefix of every lat/lng in the search area"
         . HH.property
         $ do
           coord <- HH.forAll geoCoordGen
@@ -43,7 +44,7 @@ test_geoSpec =
           case mbNearbyHash of
             Nothing -> fail "Unable to encode nearbyHash"
             Just nearbyHash -> HH.assert $ any (`Bytes.isPrefixOf` nearbyHash) hashes
-    , testProperty "contains a prefix of every lat/lng in the search area (km) "
+    , testProperty "proximitySearchHashes contains a prefix of every lat/lng in the search area (km) "
         . HH.property
         $ do
           coord <- HH.forAll geoCoordGen
@@ -62,7 +63,7 @@ test_geoSpec =
           case mbNearbyHash of
             Nothing -> fail "Unable to encode nearbyHash"
             Just nearbyHash -> HH.assert $ any (`Bytes.isPrefixOf` nearbyHash) hashes
-    , testProperty "does not search the whole world"
+    , testProperty "proximitySearchHashes does not search the whole world"
         . HH.property
         $ do
           coord <- HH.forAll geoCoordGen
@@ -71,6 +72,20 @@ test_geoSpec =
             hashes = proximitySearchHashes (Kilometers km) coord
           HH.annotateShow hashes
           HH.assert $ all (\a -> Bytes.length a > 0) hashes
+    , testProperty "geoDistanceWithin does not search the whole world"
+        . HH.property
+        $ do
+          coord1 <- HH.forAll geoCoordGen
+          distanceInMeters <- HH.forAll (doubleRangeGen 1000 200_000)
+          heading <- HH.forAll degreesGen
+
+          let
+            coord2 = directGeo heading distanceInMeters (geodeticCoord coord1)
+            withinMeters = Meters (distanceInMeters * 1.01)
+            withoutMeters = Meters (distanceInMeters * 0.99)
+
+          HH.assert $ geoDistanceWithin coord1 withinMeters coord2
+          HH.assert . not $ geoDistanceWithin coord1 withoutMeters coord2
     ]
 
 deriving instance Show Meters

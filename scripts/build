@@ -3,4 +3,4 @@
 set -o errexit
 
 ./scripts/format-repo
-./scripts/build-lib
+./scripts/test
