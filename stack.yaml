@@ -1,4 +1,4 @@
-resolver: lts-24.11
+resolver: lts-24.12
 # We currently maintain compatibility with 22.39 for transition purposes, but only
 # with the ci flag set to false
 # resolver: lts-22.39
