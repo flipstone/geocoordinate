@@ -62,7 +62,7 @@ library geocoordinate-internal
     , containers
     , deepseq >=1.4 && <=1.6
     , dimensional
-    , geodetics >=0.1 && <1.2
+    , geodetics ==1.1.*
     , geohash
   default-language: Haskell2010
   if flag(ci)

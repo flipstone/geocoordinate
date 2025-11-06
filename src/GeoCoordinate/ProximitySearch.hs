@@ -1,5 +1,3 @@
-{-# LANGUAGE CPP #-}
-
 {- |
 Copyright: Flipstone Technology Partners 2024
 License: MIT
@@ -19,9 +17,7 @@ module GeoCoordinate.ProximitySearch
 import qualified Data.Bytes as Bytes
 import qualified Data.Maybe as Maybe
 import qualified Data.Set as S
-#if MIN_VERSION_geodetics(1,0,0)
 import qualified Geodetics.Ellipsoids as Ellipsoids
-#endif
 import qualified Geodetics.Geodetic as Geodetic
 import qualified Geodetics.Path as GeoPath
 import qualified Numeric.Units.Dimensional.Prelude as DimPrelude
@@ -114,7 +110,6 @@ geoDistanceWithin origin dist =
 
 @since 0.0.1.0
 -}
-#if MIN_VERSION_geodetics(1,0,0)
 geodeticCoord :: GeoCoord -> Geodetic.Geodetic Geodetic.WGS84
 geodeticCoord geocoord =
   Geodetic.Geodetic
@@ -122,15 +117,6 @@ geodeticCoord geocoord =
     (longitudeToDouble (longitude geocoord) * Ellipsoids.degree)
     0
     Geodetic.WGS84
-#else
-geodeticCoord :: GeoCoord -> Geodetic.Geodetic Geodetic.WGS84
-geodeticCoord geocoord =
-  Geodetic.Geodetic
-    (fmap latitudeToDouble $ multiplyByUnit (latitude geocoord) DimPrelude.degree)
-    (fmap longitudeToDouble $ multiplyByUnit (longitude geocoord) DimPrelude.degree)
-    (multiplyByUnit 0 DimPrelude.meter)
-    Geodetic.WGS84
-#endif
 
 geoDistance :: Distance d => GeoCoord -> GeoCoord -> d
 {-# INLINEABLE geoDistance #-}
@@ -143,25 +129,13 @@ geoDistance g1 =
  as it is relatively large function.
 
 -}
-#if MIN_VERSION_geodetics(1,0,0)
 geoDistanceDouble :: GeoCoord -> GeoCoord -> Double
 geoDistanceDouble g1 g2 =
   if g1 == g2
     then 0.0
-    else
-      case Geodetic.groundDistance (geodeticCoord g1) (geodeticCoord g2) of
-        Just (dist, _, _) -> dist
-        Nothing -> infinity
-#else
-geoDistanceDouble :: GeoCoord -> GeoCoord -> Double
-geoDistanceDouble g1 g2 =
-  if g1 == g2
-    then 0.0
-    else
-      case Geodetic.groundDistance (geodeticCoord g1) (geodeticCoord g2) of
-        Just (dist, _, _) -> divideByUnit dist DimPrelude.meter
-        Nothing -> infinity
-#endif
+    else case Geodetic.groundDistance (geodeticCoord g1) (geodeticCoord g2) of
+      Just (dist, _, _) -> dist
+      Nothing -> infinity
 
 -- TODO SC-38245 we should use TH/QQ here rather than leave this to runtime. There is just no reason
 -- to have to compute this.
@@ -172,7 +146,6 @@ infinity = DimPrelude.read "Infinity"
 
 @since 0.0.1.0
 -}
-#if MIN_VERSION_geodetics(1,0,0)
 directGeo :: Degrees -> Double -> Geodetic.Geodetic Geodetic.WGS84 -> GeoCoord
 directGeo degrees distanceInMeters geodetic =
   let
@@ -183,24 +156,3 @@ directGeo degrees distanceInMeters geodetic =
     lng = longitudeFromDouble $ (Geodetic.longitude dest / Ellipsoids.degree)
   in
     GeoCoord lat lng
-#else
-directGeo :: Degrees -> Double -> Geodetic.Geodetic Geodetic.WGS84 -> GeoCoord
-directGeo degrees distanceInMeters geodetic =
-  let
-    ang = degreesToDouble degrees
-    path = GeoPath.rayPath geodetic (multiplyByUnit ang DimPrelude.degree) (multiplyByUnit 0 DimPrelude.degree)
-    (dest, _, _) = GeoPath.pathFunc path (multiplyByUnit distanceInMeters DimPrelude.meter)
-    lat = latitudeFromDouble $ divideByUnit (Geodetic.latitude dest) DimPrelude.degree
-    lng = longitudeFromDouble $ divideByUnit (Geodetic.longitude dest) DimPrelude.degree
-  in
-    GeoCoord lat lng
-#endif
-
-#if MIN_VERSION_geodetics(1,0,0)
-#else
-multiplyByUnit :: Fractional a => a -> DimPrelude.Unit m d a -> DimPrelude.Quantity d a
-multiplyByUnit = (DimPrelude.*~)
-
-divideByUnit :: Fractional a => DimPrelude.Quantity d a -> DimPrelude.Unit m d a -> a
-divideByUnit x y = x DimPrelude./~ y
-#endif
