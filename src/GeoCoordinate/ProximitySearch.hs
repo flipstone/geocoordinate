@@ -20,7 +20,6 @@ import qualified Data.Set as S
 import qualified Geodetics.Ellipsoids as Ellipsoids
 import qualified Geodetics.Geodetic as Geodetic
 import qualified Geodetics.Path as GeoPath
-import qualified Numeric.Units.Dimensional.Prelude as DimPrelude
 
 import GeoCoordinate.Distance (Degrees, Distance, degreesFromDouble, degreesToDouble, fromMeters, toMeters)
 import GeoCoordinate.GeoCoord (GeoCoord (GeoCoord, latitude, longitude), latitudeFromDouble, latitudeToDouble, longitudeFromDouble, longitudeToDouble)
@@ -140,7 +139,7 @@ geoDistanceDouble g1 g2 =
 -- TODO SC-38245 we should use TH/QQ here rather than leave this to runtime. There is just no reason
 -- to have to compute this.
 infinity :: Double
-infinity = DimPrelude.read "Infinity"
+infinity = read "Infinity"
 
 {- | Obtain the 'GeoCoord' by looking at an angle and distance along a curve.
 

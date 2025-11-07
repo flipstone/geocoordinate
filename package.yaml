@@ -1,5 +1,5 @@
 name:                geocoordinate
-version:             0.0.2.0
+version:             0.1.0.0
 github:              "flipstone/geocoordinate"
 license:             BSD3
 author:              "Flipstone Technology Partners, Inc"
@@ -93,7 +93,6 @@ internal-libraries:
       - byteslice
       - containers
       - deepseq >= 1.4 && <= 1.6
-      - dimensional
       - geodetics >= 1.1 && < 1.2
       - geohash
 

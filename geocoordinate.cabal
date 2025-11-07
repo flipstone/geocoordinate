@@ -5,7 +5,7 @@ cabal-version: 2.0
 -- see: https://github.com/sol/hpack
 
 name:           geocoordinate
-version:        0.0.2.0
+version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/flipstone/geocoordinate#readme>
 homepage:       https://github.com/flipstone/geocoordinate#readme
 bug-reports:    https://github.com/flipstone/geocoordinate/issues
@@ -61,7 +61,6 @@ library geocoordinate-internal
     , byteslice
     , containers
     , deepseq >=1.4 && <=1.6
-    , dimensional
     , geodetics ==1.1.*
     , geohash
   default-language: Haskell2010
