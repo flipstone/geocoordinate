@@ -12,7 +12,7 @@ bug-reports:    https://github.com/flipstone/geocoordinate/issues
 author:         Flipstone Technology Partners, Inc
 maintainer:     development@flipstone.com
 copyright:      2024 Flipstone Technology Partners, Inc
-license:        BSD3
+license:        MIT
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:

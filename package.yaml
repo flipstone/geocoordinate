@@ -1,7 +1,7 @@
 name:                geocoordinate
 version:             0.1.0.0
 github:              "flipstone/geocoordinate"
-license:             BSD3
+license:             MIT
 author:              "Flipstone Technology Partners, Inc"
 maintainer:          "development@flipstone.com"
 copyright:           "2024 Flipstone Technology Partners, Inc"
