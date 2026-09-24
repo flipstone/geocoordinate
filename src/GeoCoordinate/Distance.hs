@@ -35,13 +35,13 @@ newtype Degrees = Degrees Double
     ( -- | @since 0.0.1.0
       Eq
     , -- | @since 0.0.1.0
-      Ord
+      Fractional
     , -- | @since 0.0.1.0
       Num
     , -- | @since 0.0.1.0
-      Real
+      Ord
     , -- | @since 0.0.1.0
-      Fractional
+      Real
     , -- | @since 0.0.1.0
       RealFrac
     )
@@ -82,13 +82,13 @@ newtype Meters = Meters Double
     ( -- | @since 0.0.1.0
       Eq
     , -- | @since 0.0.1.0
-      Ord
+      Fractional
     , -- | @since 0.0.1.0
       Num
     , -- | @since 0.0.1.0
-      Real
+      Ord
     , -- | @since 0.0.1.0
-      Fractional
+      Real
     , -- | @since 0.0.1.0
       RealFrac
     )
@@ -126,13 +126,13 @@ newtype Kilometers = Kilometers Double
     ( -- | @since 0.0.1.0
       Eq
     , -- | @since 0.0.1.0
-      Ord
+      Fractional
     , -- | @since 0.0.1.0
       Num
     , -- | @since 0.0.1.0
-      Real
+      Ord
     , -- | @since 0.0.1.0
-      Fractional
+      Real
     , -- | @since 0.0.1.0
       RealFrac
     )
@@ -169,13 +169,13 @@ newtype Miles = Miles Double
     ( -- | @since 0.0.1.0
       Eq
     , -- | @since 0.0.1.0
-      Ord
+      Fractional
     , -- | @since 0.0.1.0
       Num
     , -- | @since 0.0.1.0
-      Real
+      Ord
     , -- | @since 0.0.1.0
-      Fractional
+      Real
     , -- | @since 0.0.1.0
       RealFrac
     )

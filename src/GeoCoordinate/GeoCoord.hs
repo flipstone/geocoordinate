@@ -54,19 +54,19 @@ instance DeepSeq.NFData GeoCoord where
 newtype Latitude = Latitude Double
   deriving
     ( -- | @since 0.0.1.0
+      DeepSeq.NFData
+    , -- | @since 0.0.1.0
       Eq
-    , -- | @since 0.0.1.0
-      Ord
-    , -- | @since 0.0.1.0
-      Num
     , -- | @since 0.0.1.0
       Floating
     , -- | @since 0.0.1.0
       Fractional
     , -- | @since 0.0.1.0
-      Show
+      Num
     , -- | @since 0.0.1.0
-      DeepSeq.NFData
+      Ord
+    , -- | @since 0.0.1.0
+      Show
     )
 
 {- | Represent a 'Double' as a 'Latitude'
@@ -90,19 +90,19 @@ latitudeToDouble (Latitude d) = d
 newtype Longitude = Longitude Double
   deriving
     ( -- | @since 0.0.1.0
+      DeepSeq.NFData
+    , -- | @since 0.0.1.0
       Eq
-    , -- | @since 0.0.1.0
-      Ord
-    , -- | @since 0.0.1.0
-      Num
     , -- | @since 0.0.1.0
       Floating
     , -- | @since 0.0.1.0
       Fractional
     , -- | @since 0.0.1.0
-      Show
+      Num
     , -- | @since 0.0.1.0
-      DeepSeq.NFData
+      Ord
+    , -- | @since 0.0.1.0
+      Show
     )
 
 {- | Represent a 'Double' as a 'Longitude'
